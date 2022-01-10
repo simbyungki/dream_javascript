@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>window size</title>
+	<style>
+		* {margin:0; padding:0;}
+		.info-box {padding:15px; background:#444;}
+		.info-box dl {display:flex;}
+		.info-box dl + dl {margin-top:10px;}
+		.info-box dl dt,
+		.info-box dl dd {color:#fff;}
+		.info-box dl dt {font-weight:600;}
+		.info-box dl dd {margin-left:10px;}
+	</style>
+</head>
+<body>
+	<section class="info-box">
+		<dl id="window_screen">
+			<dt>window.screen</dt>
+			<dd>
+				<span class="width"></span>
+				*
+				<span class="height"></span>
+			</dd>
+		</dl>
+		<dl id="window_outer">
+			<dt>window.outer</dt>
+			<dd>
+				<span class="width"></span>
+				*
+				<span class="height"></span>
+			</dd>
+		</dl>
+		<dl id="window_inner">
+			<dt>window.inner</dt>
+			<dd>
+				<span class="width"></span>
+				*
+				<span class="height"></span>
+			</dd>
+		</dl>
+		<dl id="document_size">
+			<dt>document.client</dt>
+			<dd>
+				<span class="width"></span>
+				*
+				<span class="height"></span>
+			</dd>
+		</dl>
+	</section>
+
+	<div style="height:1500px;"></div>
+
+
+<script>/*
+let documentWidth = window.outer.width;
+let documentHeight = window.outer.height;
+const $win_inner_width = document.querySelector('#document_size .width');
+const $win_inner_height = document.querySelector('#document_size .height');
+*/
+updateSize();
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+	if(!resizeTimeout){
+		resizeTimeout = setTimeout(function(){
+			resizeTimeout = null;
+			updateSize();
+			// 15fps
+		}, 66);
+	}
+})
+
+function updateSize(){
+	document.querySelector('#window_screen .width').innerHTML =  window.screen.width;
+	document.querySelector('#window_screen .height').innerHTML =  window.screen.height;
+	document.querySelector('#window_outer .width').innerHTML =  window.outerWidth;
+	document.querySelector('#window_outer .height').innerHTML =  window.outerHeight;
+	document.querySelector('#window_inner .width').innerHTML =  window.innerWidth;
+	document.querySelector('#window_inner .height').innerHTML =  window.innerHeight;
+	document.querySelector('#document_size .width').innerHTML =  document.documentElement.clientWidth;
+	document.querySelector('#document_size .height').innerHTML =  document.documentElement.clientHeight;
+}
+
+</script>
+</body>
+</html>
+
+<!--
+  JavaScript Window객체의 Size와 관련된 API에 대해 알아보기
+
+window객체는 browser에서 기본적으로 제공하는 것중 하나이다.
+그 중 size(width, height)와 관련된 API를 알아보려 한다.
+
+# window.screen : 모니터 사이즈 (해상도)
+
+let screenWidth = window.screen.width;
+let screenHeight = window.screen.height;
+
+스크린(모니터)의 해상도를 나타내기 때문에 browser의 사이즈에 변화를 줘도 값에는 전혀 변화가 없다.
+
+# window.outer : 브라우저 사이즈 (탭, URL입력창 영역 등 포함) 
+
+let browserWidth = window.outerWidth;
+let browserHeight = window.outerHeight;
+
+브라우저 창의 width와 height값을 가져올 수 있다. 브라우저의 탭, url입력창 등을 모두 포함한다.
+
+
+# widnow.inner : 브라우저 콘텐츠 영역 (스크롤바 '포함')
+
+let browserContentWidth = window.innerWidth;
+let browserContentHeight = window.innerHeight;
+
+브라우저 창의 콘텐츠 영역의 width와 height값을 구할 수 있다. 브라우저의 탭, URL입력창은 제외하되, 스크롤바는 포함한다.
+
+# document.documentElement.clientWidth : HTML Document 영역 (스크롤바 '제외')
+
+let documentWidth = document.documentElement.clientWidth;
+let documentHeight = document.documentElement.clientHeight;
+
+HTML document의 width와 height값을 구할 수 있다. 스크롤바 사이즈를 제외한 값을 구한다.
+
+
+위 4가지만 잘 활용하면 사이즈와 관련된 이벤트를 만드는데는 무리가 없을 것 같다.
+
+
+  
+
+
+
+
+-->

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>window coordinates</title>
+<style>
+* {margin:0; padding:0;}
+.content {padding:60px 10px 10px;}
+.content p {line-height:1.4; color:#555; font-size:16px;}
+.content .box {margin:20px 0; width:100px; height:100px; line-height:100px; color:#fff; font-size:18px; font-weight:600; text-align:center;background:#003d33;}
+.nav {position:fixed; right:20px; top:20px;}
+.nav ul {display:flex;}
+.nav li + li {margin-left:10px;}
+
+.btn {display:block; position:fixed; left:0; top:0; height:60px; width:100%; line-height:60px; color:#fff; font-size:20px; text-align:center; background:#444;}
+.btn:active {top:1px;}
+</style>
+</head>
+<body>
+	<article class="content">
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam itaque nulla animi, deleniti reiciendis in! Minima porro est sequi impedit veniam vitae mollitia fuga magni, dolor aliquid! Reprehenderit, sit officia!</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus tenetur nemo corporis dolorem mollitia totam, vel optio corrupti doloribus impedit unde molestias provident quod ab fugiat, at eveniet, sapiente atque?</p>
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		<div class="box">special</div>
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore repellat eaque molestias amet delectus maiores assumenda ipsum aut repellendus, voluptates quos distinctio necessitatibus commodi non? Earum error quos deleniti sapiente?</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur quibusdam exercitationem, saepe blanditiis adipisci nulla qui sed tempore sunt voluptatibus nesciunt atque quas nobis ipsam animi. Accusamus vel optio error?</p>		
+		
+	</article>
+	<a href="javascript:;" class="btn">scrollTo(0, 250);</a>
+<script>
+
+const $btn = document.querySelector('.btn');
+$btn.addEventListener('click', () => {
+  // window.scrollTo(x좌표, y좌표);
+  window.scrollTo(0, 250);
+});
+
+</script>
+</body>
+</html>
+
+<!-- 
+Javascript Window Scroll과 관련된 메소드에 대해 알아보기
+
+좌표값과 더불어 웹 UI개발을 할때 거의 항상 쓰이는 window scroll과 관련된 Window 메소드에 대해 알아보자.
+
+ㅡㅡㅡ
+
+# window.scrollTo() 
+지정된 좌표값으로 웹브라우저의 스크롤을 이동시킨다.
+
+const $btn = document.querySelector('.btn');
+$btn.addEventListener('click', () => {
+  // window.scrollTo(x좌표, y좌표);
+  window.scrollTo(0, 250);
+});
+
+[이미지 1 - gif]
+
+스크롤 이동을 부드럽게 하려면 parameter를 객체 형태로 전달하면서 behavior:'smooth'를 추가로 전달한다.
+
+
+
+const $btn = document.querySelector('.btn');
+$btn.addEventListener('click', () => {
+  // window.scrollTo({left:x좌표, top:y좌표, behavior:'smooth'});
+  window.scrollTo({left:0, top:250, behavior:'smooth'});
+});
+
+[이미지 2 - gif]
+
+ㅡㅡㅡ
+
+# window.scrollBy() 
+웹브라우저의 현재 스크롤 위치에서 전달된 값만큼 스크롤을 이동시킨다.
+
+const $btn = document.querySelector('.btn');
+$btn.addEventListener('click', () => {
+  // window.scrollBy(x좌표, y좌표)
+  window.scrollBy(0, 100);
+});
+
+[이미지 3 - gif]
+
+스크롤 이동을 부드럽게 하려면 parameter를 객체 형태로 전달하면서 behavior:'smooth'를 추가로 전달한다.
+
+const $btn = document.querySelector('.btn');
+$btn.addEventListener('click', () => {
+  // window.scrollBy({left:x좌표, top:y좌표, behavior:'smooth'})
+  window.scrollBy({left:0, top:150, behavior:'smooth'});
+});
+
+
+[이미지 4 - gif]
+
+ㅡㅡㅡ
+
+# Element.scrollIntoView()
+특정 Element의 위치로 웹브라우저의 스크롤을 이동시킨다.
+
+const $btn = document.querySelector('.btn');
+const $Element = document.querySelector('.box');
+$btn.addEventListener('click', () => {
+  $Element.scrollIntoView();
+});
+
+
+[이미지 5 - gif]
+
+스크롤 이동을 부드럽게 하려면 parameter를 객체 형태로 전달하면서 behavior:'smooth'를 추가로 전달한다.
+
+
+
+const $btn = document.querySelector('.btn');
+const $Element = document.querySelector('.box');
+$btn.addEventListener('click', () => {
+  $Element.scrollIntoView({behavior:'smooth'});
+});
+
+[이미지 6 - gif]
+
+
+
+-->
