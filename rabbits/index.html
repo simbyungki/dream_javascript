@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scroll</title>
+<style>
+body {background:#222;}
+ul, li {margin:0; padding:0; list-style:none;}
+.items {display:flex; flex-direction:column; align-items:center;}
+.items li img {width:120px;}
+.btn-find-rabbit {display:block; margin:0 auto; width:100px; height:30px; line-height:30px; color:#fff; text-align:center; background:#444; border-radius:5px;}
+.btn-find-rabbit:active {position:relative; top:1px;}
+</style>
+</head>
+<body>
+  <a href="javascript:;" class="btn-find-rabbit">find rabbit 🥕</a>
+  <ul class="items">
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li class="rabbit"><img src="./img/rabbit.png" alt="토끼"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+    <li><img src="./img/carrot.png" alt="당근"></li>
+  </ul>
+<script>
+    const $btnFindRabbit = document.querySelector('.btn-find-rabbit');
+    const $rabbit = document.querySelector('.items li.rabbit');
+    
+    $btnFindRabbit.addEventListener('click', () => {
+      $rabbit.scrollIntoView({behavior: 'smooth', block: 'center'});
+    })
+</script>
+</body>
+</html>
