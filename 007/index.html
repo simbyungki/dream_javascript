@@ -8,15 +8,15 @@
   <link rel="stylesheet" href="style.css" />
 <style>
 * {padding:0; margin:0;}
-html, body {width:100vw; height:100vh; background:#222;}
+html, body {width:100vw; height:100vh; background:#222; overflow:hidden;}
 .bar-x,
 .bar-y,
 .target,
-.coordinates {position:fixed;}
-.bar-x {left:0; top:-10px; width:100%; height:1px; background:#fff;}
-.bar-y {left:-10px; top:0; width:1px; height:100%; background:#fff;}
-.target {left:-130px; top:0; width:120px; height:120px; background:url('./img/target.png') no-repeat center;}
-.coordinates {color:#fff; font-size:20px;}
+.coordinates {position:absolute;}
+.bar-x {transform:translate(0, 50%); width:100%; height:1px; background:#fff;}
+.bar-y {transform:translate(50%, 0); width:1px; height:100%; background:#fff;}
+.target {transform:translate(0, 0); width:120px; height:120px; background:url('./img/target.png') no-repeat center;}
+.coordinates {transform:translate(0, 0); color:#fff; font-size:20px;}
 </style>
 </head>
 <body>
@@ -29,19 +29,21 @@ html, body {width:100vw; height:100vh; background:#222;}
 const $barX = document.querySelector('.bar-x');
 const $barY = document.querySelector('.bar-y');
 const $target = document.querySelector('.target');
-const $coordinates = document.querySelector('.coordinates');
-document.addEventListener('mousemove', (event) => {
-  let mouseX = event.x;
-  let mouseY = event.y;
-  $coordinates.innerHTML = `${mouseX}px, ${mouseY}px`;
-
-  $target.style.top = mouseY -60 + 'px';
-  $target.style.left = mouseX -60 + 'px';
-  $coordinates.style.top = mouseY + 20 + 'px';
-  $coordinates.style.left = mouseX + 20 + 'px';
-  $barX.style.top = mouseY + 'px';
-  $barY.style.left = mouseX + 'px';
-  
+window.addEventListener('load', () => {
+	const targetRect = $target.getBoundingClientRect();
+	const targetHalfWidth = targetRect.width / 2;
+	const targetHalfHeight = targetRect.height / 2;
+	const $coordinates = document.querySelector('.coordinates');
+	document.addEventListener('mousemove', (event) => {
+	let mouseX = event.clientX;
+	let mouseY = event.clientY;
+	$coordinates.innerHTML = `${mouseX}px, ${mouseY}px`;
+	$coordinates.style.transform = `translate(${mouseX + 20}px, ${mouseY + 20}px)`;
+	$target.style.transform = `translate(${mouseX - targetHalfWidth}px, ${mouseY - targetHalfHeight}px)`;
+	$barX.style.transform = `translateY(${mouseY}px)`;
+	$barY.style.transform = `translateX(${mouseX}px)`;
+	
+	});
 });
 </script>
 </body>
