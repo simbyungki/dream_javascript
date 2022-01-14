@@ -10,23 +10,24 @@
 </head>
 <body>
   <section class="todo-box">
-    <header class="header">
-      <h1 class="header__title">Todo List</h1>
+    <header class="todo__header">
+      <h1 class="title">Todo List</h1>
     </header>
     <section class="todo-list">
       <ul>
         <li class="todo-list__row">
           <div class="item">
             <p class="item__name">forEach</p>
-            <button type="button" class="item__delete"></button>
+            <button type="button" class="btn-item__delete"><i class="fas fa-trash-alt"></i></button>
           </div>
         </li>
       </ul>
     </section>
-    <footer class="footer">
-      <input type="text" class="footer__input">
-      <button type="button" class="footer__button">추가</button>
+    <footer class="todo__footer">
+      <input type="text" class="footer__input" placeholder="추가할 내용을 입력해주세요.">
+      <button type="button" class="btn-item__add">추가</button>
     </footer>
   </section>
+  <script src="https://kit.fontawesome.com/01449b9132.js" crossorigin="anonymous"></script>
 </body>
 </html>
