@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 버블링 캡쳐링</title>
+    <style>
+        .outer {padding:20px; background:green;}
+        .middle {padding:20px; background:yellow;}
+
+    </style>
+</head>
+<body>
+    
+    <!-- <div class="outer">
+      <div class="middle">
+        <button class="button">click</button>
+      </div>
+    </div> -->
+
+    <style>
+      .layer {position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); padding:20px; border:2px solid #000; box-shadow:0 3px 10px rgba(0,0,0,.2);}
+      .layer p {line-height:1.4;}
+    </style>
+
+    <div class="layer">
+      <p>
+        나는 floating layer입니다.<br>
+        이 영역을 제외한 곳을 클릭하면 이 레이어를 닫아주세요.
+      </p>
+    </div>
+
+    <script>
+      layer = document.querySelector('.layer');
+      html = document.querySelector('html');
+      html.addEventListener('click', (event) => {
+        if(html.currentTarget === html.target){
+          layer.style.display = 'none';
+        }
+      });
+
+
+    </script>
+
+    
+    <!-- <script>
+        const outer = document.querySelector('.outer');
+        const middle = document.querySelector('.middle');
+        const button = document.querySelector('.button');
+
+        outer.addEventListener('click', (event) => {
+            console.log(`outer: ${event.currentTarget}, ${event.target}`);
+        });
+        middle.addEventListener('click', (event) => {
+            console.log(`outer: ${event.currentTarget}, ${event.target}`);
+        });
+        button.addEventListener('click', (event) => {
+            console.log(`outer: ${event.currentTarget}, ${event.target}`);
+        });
+    </script> -->
+</body>
+</html>
+
+
+
+<!--
+JavaScript 버블링 방지, 이제 stopPropagation, stopImmediatePropagation은 그만
+
+JavaScript를 사용하여 웹 UI개발을 하다보면 언젠가는 꼭 한번 경험하게되는 그 것. 
+바로 이벤트 캡쳐링, 버블링이다.
+나는 특정 요소에만 이벤트를 주고 싶은데 그 버튼을 감싸고 있는 요소에도 이벤트가 발생(이벤트 버블링)되거나,
+그 하위 요소들까지 이벤트가 발생(이벤트 캡쳐링)하게 된다.
+[이미지 1]
+
+구글에 "이벤트 버블링 방지"를 검색하면 많은 글이 나온다. 대부분의 글에는
+이벤트 버블링을 막기 위해 event.stopPropagation(); 또는 event.stopImmediatePropagation()을 사용하라고 되어있다.
+정말 그게 정답일까?
+
+ㅡㅡㅡ
+
+위 내용을 이해를 돕기 위해 한가지 예를 들어보자.
+
+ㅡㅡㅡㅡ
+
+웹 페이지 내에서 작은 레이어를 띄우고 그 레이어외 영역을 클릭 시 레이어를 닫는 코드를 만들어보자.
+
+<style>
+  .layer {position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); padding:20px; border:2px solid #000; box-shadow:0 3px 10px rgba(0,0,0,.2);}
+</style>
+
+<div class="layer">
+  <p>
+    나는 floating layer입니다.
+    이 영역을 제외한 곳을 클릭하면 이 레이어를 닫아주세요.
+  </p>
+</div>
+
+[이미지 2]
+
+레이어를 제외한 영역을 클릭하면 레이어를 숨기고자 하니 document에 이벤트를 주면 될 것 같다.
+layer = document.querySelector('.layer');
+
+document.addEventListener('click', () => {
+  layer.style.display = 'none';
+});
+
+[이미지 3]
+
+레이어를 제외한 영역을 클릭하면 레이어가 잘 닫히지만, 레이어를 클릭해도 레이어가 닫혀버린다.
+당연한 결과이다. 레이어도 document 아래 있는 요소이기 때문이다.
+이를 막기 위해서는 레이어에도 클릭 이벤트를 주어 html까지 이벤트 전달이 안되도록 버블링을 막으면 된다.
+버블링을 막기 위해서는 stopPropagation 메소드를 사용하면 될까?
+
+layer = document.querySelector('.layer');
+html = document.querySelector('html');
+layer.addEventListener('click', (event) =>{
+  event.stopPropagation();
+});
+html.addEventListener('click', (event) => {
+  layer.style.display = 'none';
+});
+
+[이미지 4]
+원하던 것처럼 버블링을 막아 잘 작동된다. 하지만 이것은 정답이 아니다.
+stopPropagation 메소드는 당장 원하지 않는 이벤트 버블링을 막아주긴 하지만, 추후에 운영상의 이유로 상위 요소에서도 이벤트가 발생되야 하는 경우가 생기면 꼬일 수 있다.
+(특히 내가 작성한 코드가 아니라면 왜 이벤트 전달이 안되는지 한참을 찾아야 하는 상황이 생길 수도 있다.)
+
+ㅡㅡㅡ
+
+그럼 어떻게 이벤트 버블링을 막을 수 있을까?
+답은 event.currentTarget과, event.target에 있다.
+
+아래와 같이 스크립트를 작성 후 레이어를 클릭해보면, 
+layer = document.querySelector('.layer');
+html = document.querySelector('html');
+layer.addEventListener('click', (event) =>{
+  console.log(`layer currentTarget : ${event.currentTarget}`);
+  console.log(`layer target : ${event.target}`);
+});
+html.addEventListener('click', (event) => {
+  console.log(`html currentTarget : ${event.currentTarget}`);
+  console.log(`html target : ${event.target}`);
+});
+layer에는 currentTarget과 target이 모두 클릭한 자신, 즉 HTMLDivElement가 출력되고 있지만,
+버블링을 통해 전달된 document에는 currentTarget은 HTMLDocument가, target은 HTMLDivElement가 출력되고 있다.
+이를 통해 버블링을 통해 전달된 요소는 currentTarget과 target의 값이 다르다는 것을 알 수 있으니,
+버블링을 막기 위해 아래와 같이 JavaScript를 아래와 같이 수정해보자.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+-->
