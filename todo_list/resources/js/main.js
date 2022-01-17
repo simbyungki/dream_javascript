@@ -50,9 +50,13 @@ window.addEventListener('load', () => {
 		// 3. 아이템 추가
 		itemList.appendChild(item);
 
-		// 3. 인풋박스 초기화
+        // 3. 새로 추가된 아이템으로 스크롤
+        item.scrollIntoView({block: 'start'});
+
+		// 4. 인풋박스 초기화
 		todoInput.value = '';
 		todoInput.focus();
+
 	}
 
 	let id = 0; // UUID
