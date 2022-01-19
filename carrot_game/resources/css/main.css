@@ -1,0 +1,80 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+#container {
+    width: 100vw;
+    height: 100vh;
+    background: url('../img/background.png') no-repeat center;
+    background-size: cover;
+    cursor: grab;
+}
+.controller {
+    position: fixed;
+    left: 50%;
+    top: 40px;
+    transform: translate(-50%);
+    padding: 15px;
+    text-align: center;
+}
+.controller .btn {
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 10px;
+    border: 5px solid #000;
+    cursor: pointer;
+}
+.controller .btn:hover {
+    top: -1px;
+}
+.controller .btn:active {
+    top: 1px;
+}
+.controller .btn i {
+    font-size: 30px;
+}
+.controller .count-time {
+    margin-top: 15px;
+    padding: 20px 20px;
+    background: #fff;
+    border-radius: 10px;
+    border: 5px solid #000;
+}
+.controller .count-time span {
+    font-size: 60px;
+    font-weight: 600;
+}
+.controller .score {
+    margin: 20px auto 0;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 40px;
+    background: #333;
+    border-radius: 50em;
+    border: 5px solid #000;
+}
+.play-ground {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 50vh;
+}
+.play-ground .target {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.15s;
+}
+.play-ground .target:hover {
+    transform: scale(1.1);
+}
+.play-ground .target:active {
+    cursor: grabbing;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Carrot Game</title>
+	<link rel="stylesheet" href="./resources/css/main.css">
+	<script src="./resources/js/main.js" defer></script>
+	<script src="https://kit.fontawesome.com/01449b9132.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<section id="container">
+		<section class="controller">
+			<button type="button" class="btn play"><i class="fas fa-play"></i></button>
+			<button type="button" class="btn play"><i class="fas fa-pause"></i></button>
+			<button type="button" class="btn play"><i class="fas fa-redo-alt"></i></button>
+			<div class="count-time" title="남은시간">
+				<span>00:00</span>
+			</div>
+			<div class="score" title="점수">0</div>
+		</section>
+		<section class="play-ground"></section>
+	</section>
+<script>
+window.addEventListener('load', () => {
+	initGame(10);
+});
+
+// game 초기화
+function initGame(num){
+	createTargets(num);
+	console.log(getRandomNum())
+}
+// 당근과 벌레 생성 
+function createTargets(num){
+	const playGround = document.querySelector('.play-ground');
+	for(let i = 0; i < num; i++){
+		let Reborn = new createTarget('reborn');
+		let Kcar = new createTarget('kcar');
+		let Encar = new createTarget('encar');
+		let Chachacha = new createTarget('chachacha');
+		let Sellcar = new createTarget('sellcar');
+		playGround.appendChild(Reborn.el);
+		playGround.appendChild(Kcar.el);
+		playGround.appendChild(Encar.el);
+		playGround.appendChild(Chachacha.el);
+		playGround.appendChild(Sellcar.el);
+	}
+}
+
+class createTarget {
+	constructor(serviceName){
+		this.serviceName = serviceName;
+		this.leftPosition = this.getRandomNum(0, 95);
+		this.topPosition = this.getRandomNum(0, 85);
+	}
+	get el(){
+		return this.createEl();
+	}
+	createEl(){
+		const el = document.createElement('div');
+		el.setAttribute('class', `target ${this.serviceName}`);
+		el.setAttribute('style', `left:${this.leftPosition}%; top:${this.topPosition}%`);
+		const img = `<img src="./resources/img/img_${this.serviceName}.png" alt="">`;
+		el.innerHTML = img;
+
+		return el;
+	}
+	getRandomNum(min, max){
+		return Math.floor(Math.random() * (max -min) + min);
+	}
+}
+
+
+</script>
+</body>
+</html>
