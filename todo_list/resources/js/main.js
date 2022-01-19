@@ -7,16 +7,18 @@
 
 window.addEventListener('load', () => {
 	const todoBox = document.querySelector('.todo-box');
+    const form = document.querySelector('.new-form');
 	const itemList = document.querySelector('.todo-list > ul');
 	const todoInput = document.querySelector('.footer__input');
 	const todoItemAdd = document.querySelector('.btn-item__add');
 
-	todoBox.addEventListener('click', (event) => {
-		// 추가 버튼 클릭
-		if(event.target === todoItemAdd){
-			onAddItem();	
-		}
 
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        onAddItem();
+    });
+
+	todoBox.addEventListener('click', (event) => {
 		// 삭제 버튼 클릭
 		const rowId = event.target.dataset.id;
 		console.log('rowId >> ', rowId);
@@ -25,14 +27,6 @@ window.addEventListener('load', () => {
 			targetLi.remove();
 		}
 
-	});
-
-	// Enter키 press
-	todoInput.addEventListener('keypress', (event) => {
-		// console.log(event)
-		if(event.key == 'Enter'){
-			onAddItem();
-		}
 	});
 
 	// 추가 버튼 클릭 > 아이템 추가

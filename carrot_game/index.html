@@ -13,34 +13,99 @@
 	<section id="container">
 		<section class="controller">
 			<button type="button" class="btn play"><i class="fas fa-play"></i></button>
-			<button type="button" class="btn play"><i class="fas fa-pause"></i></button>
-			<button type="button" class="btn play"><i class="fas fa-redo-alt"></i></button>
+			<button type="button" class="btn pause"><i class="fas fa-pause"></i></button>
+			<button type="button" class="btn reset"><i class="fas fa-redo-alt"></i></button>
 			<div class="count-time" title="남은시간">
-				<span>00:00</span>
+				<span>00:<em class="count"></em></span>
 			</div>
-			<div class="score" title="점수">0</div>
+			<div class="score" title="점수"></div>
 		</section>
 		<section class="play-ground"></section>
 	</section>
 <script>
+let startNum = 10;
+let score = 0;
+let countDownInterval;
+const startButton = document.querySelector('.btn.play');
+const pauseButton = document.querySelector('.btn.pause');
+const resetButton = document.querySelector('.btn.reset');
 window.addEventListener('load', () => {
-	initGame(10);
+	initGame();
+    startButton.addEventListener('click', () => {
+        pauseButton.classList.remove('active');
+        startButton.classList.add('active');
+        startGame();
+        console.log(startNum)
+    });
+    pauseButton.addEventListener('click', () => {
+        startButton.classList.remove('active');
+        pauseButton.classList.add('active');
+        stopCountDown();
+        console.log(startNum)
+    });
 });
 
 // game 초기화
-function initGame(num){
-	createTargets(num);
-	console.log(getRandomNum())
+function initGame(){
+	createTargets(startNum);
+    drawTime(startNum);
+    drawScore(score);
 }
-// 당근과 벌레 생성 
-function createTargets(num){
+function startGame(){
+    countDown(startNum);
+}
+
+
+
+
+
+
+// count time
+function drawTime(startNum){
+    startNum < 10 ? startNum = '0' + startNum : startNum;
+    const countBox = document.querySelector('.count');
+    countBox.innerHTML = startNum;
+}
+function countDown(startNum){
+    countDownInterval = setInterval(() => {
+        if(startNum < 1){
+            stopCountDown();
+            console.log(startNum)
+        }else{
+            startNum -= 1;
+            console.log(startNum)
+            drawTime(startNum);
+        }
+    }, 1000);
+}
+function stopCountDown(){
+    clearInterval(countDownInterval);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// Score
+function drawScore(score){
+    const scoreBox = document.querySelector('.score');
+    scoreBox.innerHTML = score;
+}
+function scoreUp(score){
+    score += 1;
+    drawScore(score);
+    return score;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// Targets 생성 
+function createTargets(startNum){
 	const playGround = document.querySelector('.play-ground');
-	for(let i = 0; i < num; i++){
-		let Reborn = new createTarget('reborn');
-		let Kcar = new createTarget('kcar');
-		let Encar = new createTarget('encar');
-		let Chachacha = new createTarget('chachacha');
-		let Sellcar = new createTarget('sellcar');
+	for(let i = 0; i < startNum; i++){
+		let Reborn = new CreateTarget('reborn');
+		let Kcar = new CreateTarget('kcar');
+		let Encar = new CreateTarget('encar');
+		let Chachacha = new CreateTarget('chachacha');
+		let Sellcar = new CreateTarget('sellcar');
 		playGround.appendChild(Reborn.el);
 		playGround.appendChild(Kcar.el);
 		playGround.appendChild(Encar.el);
@@ -48,8 +113,7 @@ function createTargets(num){
 		playGround.appendChild(Sellcar.el);
 	}
 }
-
-class createTarget {
+class CreateTarget {
 	constructor(serviceName){
 		this.serviceName = serviceName;
 		this.leftPosition = this.getRandomNum(0, 95);

@@ -31,8 +31,15 @@
 .controller .btn:hover {
     top: -1px;
 }
+.controller .btn.active,
 .controller .btn:active {
     top: 1px;
+}
+.controller .btn.active {
+    border: 5px solid slateblue;
+}
+.controller .btn.active i {
+    color: slateblue;
 }
 .controller .btn i {
     font-size: 30px;
@@ -47,6 +54,9 @@
 .controller .count-time span {
     font-size: 60px;
     font-weight: 600;
+}
+.controller .count-time .count {
+    font-style: normal;
 }
 .controller .score {
     margin: 20px auto 0;
