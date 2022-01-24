@@ -12,130 +12,77 @@
 <body>
 	<section id="container">
 		<section class="controller">
-			<button type="button" class="btn play"><i class="fas fa-play"></i></button>
-			<button type="button" class="btn pause"><i class="fas fa-pause"></i></button>
-			<button type="button" class="btn reset"><i class="fas fa-redo-alt"></i></button>
-			<div class="count-time" title="남은시간">
-				<span>00:<em class="count"></em></span>
+			<button type="button" class="btn"><i class="fas fa-play"></i></button>
+			<div class="time" title="남은시간">
+				<span><em class="count">0</em></span>
 			</div>
-			<div class="score" title="점수"></div>
+			<div class="score" title="점수">0</div>
 		</section>
 		<section class="play-ground"></section>
 	</section>
 <script>
-let startNum = 10;
+const gameField = document.querySelector('.play-ground');
+const fieldRect = gameField.getBoundingClientRect();
+const gameBtn = document.querySelector('.btn');
+const gameTimer = document.querySelector('.time');
+const timeView = gameTimer.querySelector('.count');
+const gameScore = document.querySelector('.score');
+const MAIN_TARGET_SIZE = 80;
+const TARGET_COUNT = 10;
+
+let started = false;
+let time = 0;
 let score = 0;
-let countDownInterval;
-const startButton = document.querySelector('.btn.play');
-const pauseButton = document.querySelector('.btn.pause');
-const resetButton = document.querySelector('.btn.reset');
-window.addEventListener('load', () => {
-	initGame();
-    startButton.addEventListener('click', () => {
-        pauseButton.classList.remove('active');
-        startButton.classList.add('active');
+
+gameBtn.addEventListener('click', () => {
+    if(started){
+        stopGame();
+    } else {
         startGame();
-        console.log(startNum)
-    });
-    pauseButton.addEventListener('click', () => {
-        startButton.classList.remove('active');
-        pauseButton.classList.add('active');
-        stopCountDown();
-        console.log(startNum)
-    });
+    }
+    started = !started;
 });
 
-// game 초기화
-function initGame(){
-	createTargets(startNum);
-    drawTime(startNum);
-    drawScore(score);
-}
 function startGame(){
-    countDown(startNum);
+    initGame();
+    time = TARGET_COUNT;
+    gameTimer.style.visibility = 'visible';
+    timeView.innerText = time;
+    gameScore.style.visibility = 'visible';
 }
 
+function stopGame(){
 
-
-
-
-
-// count time
-function drawTime(startNum){
-    startNum < 10 ? startNum = '0' + startNum : startNum;
-    const countBox = document.querySelector('.count');
-    countBox.innerHTML = startNum;
-}
-function countDown(startNum){
-    countDownInterval = setInterval(() => {
-        if(startNum < 1){
-            stopCountDown();
-            console.log(startNum)
-        }else{
-            startNum -= 1;
-            console.log(startNum)
-            drawTime(startNum);
-        }
-    }, 1000);
-}
-function stopCountDown(){
-    clearInterval(countDownInterval);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-// Score
-function drawScore(score){
-    const scoreBox = document.querySelector('.score');
-    scoreBox.innerHTML = score;
-}
-function scoreUp(score){
-    score += 1;
-    drawScore(score);
-    return score;
+function initGame(){
+    gameField.innerHTML = '';
+    // 1. 타겟을 랜덤배치하며 생성
+    createTarget('carrot', TARGET_COUNT, './resources/img/carrot.png');
+    createTarget('bug', TARGET_COUNT, './resources/img/bug.png');
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-// Targets 생성 
-function createTargets(startNum){
-	const playGround = document.querySelector('.play-ground');
-	for(let i = 0; i < startNum; i++){
-		let Reborn = new CreateTarget('reborn');
-		let Kcar = new CreateTarget('kcar');
-		let Encar = new CreateTarget('encar');
-		let Chachacha = new CreateTarget('chachacha');
-		let Sellcar = new CreateTarget('sellcar');
-		playGround.appendChild(Reborn.el);
-		playGround.appendChild(Kcar.el);
-		playGround.appendChild(Encar.el);
-		playGround.appendChild(Chachacha.el);
-		playGround.appendChild(Sellcar.el);
-	}
+// 1. 타겟을 랜덤배치하며 생성
+function createTarget(className, count, imagePath){
+    const x1 = 0;
+    const y1 = 0;
+    const x2 = fieldRect.width - MAIN_TARGET_SIZE;
+    const y2 = fieldRect.height - MAIN_TARGET_SIZE;
+    for(let i = 0; i < count; i++){
+        const target = document.createElement('img');
+        target.setAttribute('src', imagePath);
+        target.setAttribute('class', `target ${className}`);
+        target.style.left = `${randomNumber(x1, x2)}px`;
+        target.style.top = `${randomNumber(y1, y2)}px`;
+        gameField.appendChild(target);
+    }
 }
-class CreateTarget {
-	constructor(serviceName){
-		this.serviceName = serviceName;
-		this.leftPosition = this.getRandomNum(0, 95);
-		this.topPosition = this.getRandomNum(0, 85);
-	}
-	get el(){
-		return this.createEl();
-	}
-	createEl(){
-		const el = document.createElement('div');
-		el.setAttribute('class', `target ${this.serviceName}`);
-		el.setAttribute('style', `left:${this.leftPosition}%; top:${this.topPosition}%`);
-		const img = `<img src="./resources/img/img_${this.serviceName}.png" alt="">`;
-		el.innerHTML = img;
-
-		return el;
-	}
-	getRandomNum(min, max){
-		return Math.floor(Math.random() * (max -min) + min);
-	}
+// 랜덤숫자 생성 (범위 내)
+function randomNumber(min, max) {
+    return Math.random() * (max - min + 1);
+    // 정수
+    // return Math.floor(Math.random() * (max - min + 1));
 }
-
 
 </script>
 </body>
