@@ -27,11 +27,12 @@ const gameBtn = document.querySelector('.btn');
 const gameTimer = document.querySelector('.time');
 const timeView = gameTimer.querySelector('.count');
 const gameScore = document.querySelector('.score');
+const btnIcon = document.querySelector('.fas');
 const MAIN_TARGET_SIZE = 80;
-const TARGET_COUNT = 10;
+let TARGET_COUNT = 10;
 
 let started = false;
-let time = 0;
+let timer = undefined;
 let score = 0;
 
 gameBtn.addEventListener('click', () => {
@@ -45,14 +46,33 @@ gameBtn.addEventListener('click', () => {
 
 function startGame(){
     initGame();
-    time = TARGET_COUNT;
-    gameTimer.style.visibility = 'visible';
-    timeView.innerText = time;
-    gameScore.style.visibility = 'visible';
+    showStopButton();
+    showTimerAndScore();
+    startGameTimer();
 }
 
-function stopGame(){
-
+function stopGame(){    
+    showPlayButton();
+    clearInterval(timer);
+}
+function startGameTimer(){
+    timer = setInterval(()=>{
+        TARGET_COUNT -= 1;
+        timeView.innerText = TARGET_COUNT;
+    }, 1000);
+}
+function showTimerAndScore(){
+    timeView.innerText = TARGET_COUNT;
+    gameTimer.style.visibility = 'visible';
+    gameScore.style.visibility = 'visible';   
+}
+function showStopButton(){
+    btnIcon.classList.add('fa-stop');
+    btnIcon.classList.remove('fa-play');
+}
+function showPlayButton(){
+    btnIcon.classList.add('fa-play');
+    btnIcon.classList.remove('fa-stop');
 }
 
 function initGame(){
