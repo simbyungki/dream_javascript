@@ -45,21 +45,32 @@ gameBtn.addEventListener('click', () => {
 });
 
 function startGame(){
-    initGame();
+	if(TARGET_COUNT == 10){
+		initGame();
+	}
     showStopButton();
     showTimerAndScore();
     startGameTimer();
 }
-
 function stopGame(){    
     showPlayButton();
     clearInterval(timer);
 }
+function endGame(){
+	console.log('111')
+}
 function startGameTimer(){
-    timer = setInterval(()=>{
-        TARGET_COUNT -= 1;
-        timeView.innerText = TARGET_COUNT;
-    }, 1000);
+	timer = setInterval( () => {
+		if(TARGET_COUNT == 1){
+			TARGET_COUNT -= 1;
+			timeView.innerText = TARGET_COUNT;
+			clearInterval(timer);
+			endGame();
+		}else{
+			TARGET_COUNT -= 1;
+			timeView.innerText = TARGET_COUNT;
+		}
+	}, 1000);
 }
 function showTimerAndScore(){
     timeView.innerText = TARGET_COUNT;
